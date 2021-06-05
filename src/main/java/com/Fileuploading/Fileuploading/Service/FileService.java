@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class FileService {
@@ -13,16 +15,16 @@ public class FileService {
     @Autowired
     public FileRepository fileRepository;
 
-    public boolean uploadvideo(Videopost videopost)
+    public UUID uploadvideo(Videopost videopost)
     {
         try{
-            fileRepository.save(videopost);
-            return true;
+            Videopost save=fileRepository.save(videopost);
+            return save.getId();
         }
         catch (Exception e)
         {
             System.out.println(e);
-            return false;
+            return UUID.fromString("00000000-0000-0000-0000-000000000000");
         }
     }
 
@@ -31,5 +33,16 @@ public class FileService {
         return fileRepository.findAll();
     }
 
-
+    public byte[] sendvideo(UUID id)
+    {
+        Optional<Videopost> video=fileRepository.findById(id);
+        if(video.isPresent())
+        {
+            return video.get().getContent();
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

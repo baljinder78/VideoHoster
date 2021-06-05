@@ -2,7 +2,6 @@ package com.Fileuploading.Fileuploading;
 
 import com.Fileuploading.Fileuploading.Modle.Videopost;
 import com.Fileuploading.Fileuploading.Repository.FileRepository;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -39,7 +38,7 @@ class FileuploadingApplicationTests {
 		byte[] bytes=Files.readAllBytes(file.toPath());
 		videopost.setContent(bytes);
 		videopost.setSize((long) bytes.length);
-		videopost.setUploadTime(new Date());
+		videopost.setUploadDate(new Date());
 
 		Videopost save_o=fileRepository.save(videopost);
 

@@ -2,28 +2,40 @@ package com.Fileuploading.Fileuploading.Modle;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 public class Videopost {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     private String name;
     private Long size;
-    private Date uploadTime;
+    private Date uploadDate;
 
     private byte[] content;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Post post;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
     public Videopost() {
     }
 
-    public Long getId() {
+    public Videopost(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -43,12 +55,12 @@ public class Videopost {
         this.size = size;
     }
 
-    public Date getUploadTime() {
-        return uploadTime;
+    public Date getUploadDate() {
+        return uploadDate;
     }
 
-    public void setUploadTime(Date uploadTime) {
-        this.uploadTime = uploadTime;
+    public void setUploadDate(Date uploadTime) {
+        this.uploadDate = uploadTime;
     }
 
     public byte[] getContent() {
@@ -57,5 +69,21 @@ public class Videopost {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public Integer getPost() {
+        return post.getPostId();
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public String getUser() {
+        return user.getUser_id();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
